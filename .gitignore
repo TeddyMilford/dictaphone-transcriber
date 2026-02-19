@@ -1,0 +1,29 @@
+# Virtual environment
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Transcription outputs
+transcripts/
+*.md
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
