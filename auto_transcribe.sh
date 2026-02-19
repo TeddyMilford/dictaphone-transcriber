@@ -19,10 +19,9 @@ echo "=====================================" >> "$LOG_FILE"
 echo "Auto-transcription started: $(date)" >> "$LOG_FILE"
 echo "=====================================" >> "$LOG_FILE"
 
-# Activate virtual environment and run the transcription
+# Run the transcription using the venv python directly
 cd "/Users/teddymilford/script_factory/dictaphone_transcriber"
-source venv/bin/activate
-python3 transcribe.py >> "$LOG_FILE" 2>&1
+/Users/teddymilford/script_factory/dictaphone_transcriber/venv/bin/python3 transcribe.py >> "$LOG_FILE" 2>&1
 
 # Log completion
 echo "Completed: $(date)" >> "$LOG_FILE"
