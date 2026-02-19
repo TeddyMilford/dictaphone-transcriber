@@ -11,7 +11,7 @@ if [ ! -d "/Volumes/WS-852" ]; then
 fi
 
 # Log file on Desktop
-LOG_FILE="$HOME/Desktop/Transcriptions/auto_transcribe.log"
+LOG_FILE="$HOME/Desktop/Transcriptions/auto_scribe.log"
 mkdir -p "$HOME/Desktop/Transcriptions"
 
 # Log the start

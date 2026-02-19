@@ -140,7 +140,7 @@ Plug in your dictaphone - transcription starts automatically.
 - Runs in background
 - macOS notification when complete
 - Output: `~/Desktop/Transcriptions/MM-DD-YYYY.md`
-- Logs: `~/Desktop/Transcriptions/auto_transcribe.log`
+- Logs: `~/Desktop/Transcriptions/auto_scribe.log`
 
 ### Manual Mode
 ```bash
@@ -241,7 +241,7 @@ launchctl load ~/Library/LaunchAgents/com.dictaphone.transcriber.plist
 **View logs:**
 ```bash
 # Application log
-cat ~/Desktop/Transcriptions/auto_transcribe.log
+cat ~/Desktop/Transcriptions/auto_scribe.log
 
 # System logs
 cat /tmp/dictaphone-transcriber.log
