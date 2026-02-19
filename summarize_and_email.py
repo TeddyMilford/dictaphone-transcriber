@@ -177,6 +177,9 @@ def main():
 
     # Save summary locally alongside the transcript
     summary_path = transcript_path.with_name(transcript_path.stem + "_summary.md")
+    # Unlink first to avoid macOS sandbox/ACL deadlock (EAGAIN/errno 11)
+    if summary_path.exists():
+        summary_path.unlink()
     summary_path.write_text(summary, encoding="utf-8")
     print(f"Summary saved to: {summary_path}")
 
