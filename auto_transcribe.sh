@@ -20,8 +20,18 @@ echo "Auto-transcription started: $(date)" >> "$LOG_FILE"
 echo "=====================================" >> "$LOG_FILE"
 
 # Run the transcription using the venv python directly
-cd "/Users/teddymilford/script_factory/dictaphone_transcriber"
-/Users/teddymilford/script_factory/dictaphone_transcriber/venv/bin/python3 transcribe.py >> "$LOG_FILE" 2>&1
+SCRIPT_DIR="/Users/teddymilford/script_factory/dictaphone_transcriber"
+VENV_PYTHON="$SCRIPT_DIR/venv/bin/python3"
+cd "$SCRIPT_DIR"
+$VENV_PYTHON transcribe.py >> "$LOG_FILE" 2>&1
+
+# Run summarization and email (only if .env is configured)
+if [ -f "$SCRIPT_DIR/.env" ]; then
+    echo "Starting summarization and email..." >> "$LOG_FILE"
+    $VENV_PYTHON summarize_and_email.py >> "$LOG_FILE" 2>&1
+else
+    echo "Skipping summary/email: .env not configured" >> "$LOG_FILE"
+fi
 
 # Log completion
 echo "Completed: $(date)" >> "$LOG_FILE"
