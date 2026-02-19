@@ -25,7 +25,7 @@ MAILGUN_DOMAIN = os.environ.get("MAILGUN_DOMAIN", "")
 EMAIL_FROM = os.environ.get("EMAIL_FROM", "")
 EMAIL_TO = os.environ.get("EMAIL_TO", "")
 
-TRANSCRIPTIONS_DIR = Path.home() / "Desktop" / "Transcriptions"
+TRANSCRIPTIONS_DIR = Path.home() / "Documents" / "Transcriptions"
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-5-20250929")
 
 SUMMARY_PROMPT = """\

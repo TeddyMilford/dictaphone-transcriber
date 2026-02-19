@@ -12,7 +12,7 @@ from faster_whisper import WhisperModel
 # Configuration
 VOLUME_NAME = "WS-852"
 VOLUME_PATH = f"/Volumes/{VOLUME_NAME}"
-OUTPUT_DIR = Path.home() / "Desktop" / "Transcriptions"
+OUTPUT_DIR = Path.home() / "Documents" / "Transcriptions"
 MODEL_SIZE = "base"  # Options: tiny, base, small, medium, large
 
 # VAD (Voice Activity Detection) settings
