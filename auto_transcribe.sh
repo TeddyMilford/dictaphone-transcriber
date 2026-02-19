@@ -22,7 +22,7 @@ echo "=====================================" >> "$LOG_FILE"
 # Activate virtual environment and run the transcription
 cd "/Users/teddymilford/script_factory/dictaphone_transcriber"
 source venv/bin/activate
-python transcribe.py >> "$LOG_FILE" 2>&1
+python3 transcribe.py >> "$LOG_FILE" 2>&1
 
 # Log completion
 echo "Completed: $(date)" >> "$LOG_FILE"
