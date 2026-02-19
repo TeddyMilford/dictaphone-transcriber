@@ -49,11 +49,28 @@ fi
 
 # Run the transcription
 "$VENV_PYTHON" "$SCRIPT_DIR/transcribe.py" >> "$LOG_FILE" 2>&1
+TRANSCRIBE_EXIT=$?
+
+if [ $TRANSCRIBE_EXIT -ne 0 ]; then
+    echo "Error: Transcription failed (exit $TRANSCRIBE_EXIT)" >> "$LOG_FILE"
+    echo "Completed with errors: $(date)" >> "$LOG_FILE"
+    echo "" >> "$LOG_FILE"
+    osascript -e 'display notification "Transcription failed. Check ~/Library/Logs/auto_scribe.log for details." with title "Dictaphone Transcriber"'
+    exit 1
+fi
 
 # Run summarization and email (only if .env is configured)
 if [ -f "$SCRIPT_DIR/.env" ]; then
     echo "Starting summarization and email..." >> "$LOG_FILE"
     "$VENV_PYTHON" "$SCRIPT_DIR/summarize_and_email.py" >> "$LOG_FILE" 2>&1
+    EMAIL_EXIT=$?
+    if [ $EMAIL_EXIT -ne 0 ]; then
+        echo "Error: Summarization/email failed (exit $EMAIL_EXIT)" >> "$LOG_FILE"
+        echo "Completed with errors: $(date)" >> "$LOG_FILE"
+        echo "" >> "$LOG_FILE"
+        osascript -e 'display notification "Transcription done but email failed. Check ~/Library/Logs/auto_scribe.log." with title "Dictaphone Transcriber"'
+        exit 1
+    fi
 else
     echo "Skipping summary/email: .env not configured" >> "$LOG_FILE"
 fi

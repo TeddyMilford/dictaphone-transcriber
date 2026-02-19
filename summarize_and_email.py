@@ -26,7 +26,7 @@ EMAIL_FROM = os.environ.get("EMAIL_FROM", "")
 EMAIL_TO = os.environ.get("EMAIL_TO", "")
 
 TRANSCRIPTIONS_DIR = Path.home() / "Documents" / "Transcriptions"
-CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-5-20250929")
+CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
 
 SUMMARY_PROMPT = """\
 You are summarizing a day's worth of voice recordings from a dictaphone. The transcript \
@@ -121,6 +121,27 @@ def summarize_transcript(transcript_text):
     return summary
 
 
+def markdown_to_html(text):
+    """Convert the markdown summary to simple HTML for email rendering."""
+    lines = []
+    for line in text.splitlines():
+        if line.startswith("## "):
+            line = f"<h2>{line[3:]}</h2>"
+        elif line.startswith("# "):
+            line = f"<h1>{line[2:]}</h1>"
+        elif line.startswith("- "):
+            line = f"<li>{line[2:]}</li>"
+        elif line == "":
+            line = "<br>"
+        else:
+            line = f"<p>{line}</p>"
+        # Bold
+        import re
+        line = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', line)
+        lines.append(line)
+    return "\n".join(lines)
+
+
 def send_email(subject, body):
     """Send the summary email via Mailgun."""
     print(f"Sending email via Mailgun to {EMAIL_TO}...")
@@ -133,6 +154,7 @@ def send_email(subject, body):
             "to": [EMAIL_TO],
             "subject": subject,
             "text": body,
+            "html": markdown_to_html(body),
         },
     )
 
