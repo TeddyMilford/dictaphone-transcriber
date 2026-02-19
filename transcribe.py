@@ -163,6 +163,10 @@ def main():
 
     # Save transcription with date as markdown for better AI readability
     output_file = OUTPUT_DIR / f"{date_filename}.md"
+    # Remove existing file first to avoid macOS sandbox/ACL deadlock (EAGAIN/errno 11)
+    # when a LaunchAgent tries to overwrite a file with com.apple.macl extended attributes
+    if output_file.exists():
+        output_file.unlink()
     with open(output_file, 'w', encoding='utf-8') as f:
         f.writelines(summary)
         f.writelines(all_transcriptions)
